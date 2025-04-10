@@ -1,0 +1,141 @@
+set up a basic Spring project in Eclipse without using Spring Boot. Here are the steps:
+
+Prerequisites:
+1.	Eclipse IDE: Make sure you have Eclipse IDE for Java Developers (or a similar edition with Java development capabilities) installed.
+2.	Java Development Kit (JDK) 1.8: Ensure JDK 1.8 is installed and configured in your system.
+3. Maven 3.8.8: Verify that Maven 3.8.8 is installed and its bin directory is added to your system's PATH environment variable.
+
+
+Steps:
+
+1. Create a New Maven Project in Eclipse:
+	Open Eclipse.
+	Go to File > New > Other.... or ctrl+n (windows)
+	In the "New" dialog, expand Maven and select Maven Project. Click Next.
+		Uncheck the "Use default Workspace location" option if you want to save the project in a different directory.
+		Click Next.
+			In the "Select an Archetype" dialog, search for and select the maven-archetype-quickstart. Click Next.
+			Enter the following details for your project:
+			Group Id: A unique identifier for your project's group (e.g., com.skills.spring).
+			Artifact Id: A unique identifier for your project (e.g., basic-spring-app).
+			Version: The initial version of your project (e.g., 1.0-SNAPSHOT).
+			Package: The base package for your project's source code (e.g., com.skills.spring).
+			Click Finish.
+Eclipse will create a new Maven project structure in your workspace.
+
+2. Add Spring Dependencies to pom.xml:
+In your Project Explorer, open the pom.xml file located in the root of your project.
+
+Add the following Spring Core and Context dependencies within the <dependencies> tags:
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>4.3.30.RELEASE</version> </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>4.3.30.RELEASE</version> </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>4.3.30.RELEASE</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>1.8.13</version> </dependency>
+
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+Important: Choose a stable Spring 4 version (like 4.3.30.RELEASE) as Spring 5 and later versions have a baseline requirement of Java 8 or higher, and some features might be optimized for later Java versions.
+Save the pom.xml file. And run mav install. Maven will automatically download the specified dependencies. You can see the progress in the Eclipse console.
+
+
+
+3. Create Your Spring Bean Class:
+In the src/main/java directory, under your project's package (e.g., com.skills.spring), create a new Java class. Let's name it HelloWorld.
+package com.example;
+public class HelloWorld {
+    private String message;
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void getMessage() {
+        System.out.println("Message: " + message);
+    }
+}
+
+4. Create the Spring Configuration File:
+Create a new directory named resources under the src/main directory.
+Inside the resources directory, create a new XML file named applicationContext.xml. This file will contain the definitions of your Spring beans.
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="helloWorldBean" class="com.example.HelloWorld">
+        <property name="message" value="Hello Spring without Boot!" />
+    </bean>
+</beans>
+
+Install Spring tools from eclipse market place, if any error shown in bean or beans tag. Because eclipse may fail to resolve schemas 
+
+<beans>: The root element for the Spring configuration.
+<bean>: Defines a Spring bean.
+id: A unique name for the bean within the Spring container.
+class: The fully qualified name of the Java class that represents the bean.
+<property>: Used to set properties of the bean.
+name: The name of the setter method in the bean class (following Java bean conventions, e.g., setMessage corresponds to message).
+value: The value to be injected into the property.
+
+
+
+5. Create a Main Class to Run the Application:
+In the src/main/java directory, under your project's package (e.g., com.example), create another new Java class named MainApp.
+
+package com.example;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+    public static void main(String[] args) {
+        // Load the Spring configuration file
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        // Get the "helloWorldBean" from the Spring container
+        HelloWorld helloWorld = (HelloWorld) context.getBean("helloWorldBean");
+
+        // Call a method on the bean
+        helloWorld.getMessage();
+    }
+}
+
+ApplicationContext: Represents the Spring IoC (Inversion of Control) container.
+ClassPathXmlApplicationContext: A specific implementation of ApplicationContext that loads bean definitions from an XML file in the classpath.
+context.getBean("helloWorldBean"): Retrieves the bean with the specified ID from the Spring container.
+
+
+6. Run the Application:
+
+In Eclipse, right-click on the MainApp.java file in the Project Explorer.
+Select Run As > Java Application.
+You should see the following output in the Eclipse console:
+
+Message: Hello Spring without Boot!
+Explanation:
+
+Maven manages your project's dependencies (Spring libraries).
+The applicationContext.xml file defines your Spring beans and how they are configured.
+The MainApp class loads the Spring configuration file, gets the helloWorldBean from the Spring container, and then interacts with that bean.
