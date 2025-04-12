@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="helloWorldBean" class="com.skills.spring.HelloWorld">
         <property name="message" value="Hello Spring without Boot!" />
+    </bean>
+    
+    <bean id="fruitBean" class="com.skills.spring.Fruit"/>
+    <bean id="fruitWithName" class="com.skills.spring.Fruit">
+    	<constructor-arg index="0" value="apple"></constructor-arg>
+    </bean>
+    <bean id="vegetableWithName" class="com.skills.spring.Vegetable">
+    	<property name="name" value="Radish"/>
+    </bean>
+    <bean id="vegetableBean" class="com.skills.spring.Vegetable"/>
+    <bean id="fruitWithNameListAndMap" class="com.skills.spring.Fruit">
+    	<property name="nameList">
+    		<list>
+    			<value>Apple</value>
+    			<value>Banana</value>
+    			<value>Orange</value>
+    		</list>
+    	</property>
+    	<property name="nameColorMap">
+    		<map>
+    			<entry>
+    				<key><value>Apple</value></key>
+    				<value>Red</value>
+    			</entry>
+    			<entry>
+    				<key><value>Banana</value></key>
+    				<value>Yellow</value>
+    			</entry>
+    			<entry>
+    				<key><value>Orange</value></key>
+    				<value>Orange</value>
+    			</entry>
+    		</map>
+    	</property>
     </bean>
 </beans>
