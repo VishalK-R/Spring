@@ -1,0 +1,41 @@
+configuring application.xml for beans
+
+1. CREATE a BEAN by using NO-ARGS CONSTRUCTOR
+<bean id="fruitBean" class="com.skills.spring.Fruit"/>
+
+2. CREATE a BEAN using ARGUMENT CONSTRUCTOR
+<bean id="fruitWithName" class="com.skills.spring.Fruit">
+   	<constructor-arg index="0" value="apple"></constructor-arg>
+</bean>
+	
+3. CREATE a BEAN set property using SETTER
+<bean id="vegetableWithName" class="com.skills.spring.Vegetable">
+   	<property name="name" value="Radish"/> 
+</bean> Note: name value should be same as the property name.
+
+4. CREATE a BEAN set property type of List and Map
+<bean id="fruitWithNameListAndMap" class="com.skills.spring.Fruit">
+    	<property name="nameList">
+    		<list>
+    			<value>Apple</value>
+    			<value>Banana</value>
+    			<value>Orange</value>
+    		</list>
+    	</property>
+    	<property name="nameColorMap">
+    		<map>
+    			<entry>
+    				<key><value>Apple</value></key>
+    				<value>Red</value>
+    			</entry>
+    			<entry>
+    				<key><value>Banana</value></key>
+    				<value>Yellow</value>
+    			</entry>
+    			<entry>
+    				<key><value>Orange</value></key>
+    				<value>Orange</value>
+    			</entry>
+    		</map>
+    	</property>
+    </bean>

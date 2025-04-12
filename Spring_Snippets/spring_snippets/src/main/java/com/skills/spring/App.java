@@ -17,5 +17,21 @@ public class App
 
         // Call a method on the bean
         helloWorld.getMessage();
+        
+        // Get the "fruitBean" and "vegetableBean" from the Spring container
+        Fruit fruit = (Fruit) context.getBean("fruitBean");
+        Vegetable vegetable = (Vegetable) context.getBean("vegetableBean");
+        
+        Fruit fruitWithName = (Fruit) context.getBean("fruitWithName");
+        Vegetable vegetableWithName = (Vegetable) context.getBean("vegetableWithName");
+        
+        System.out.println(fruit.talkAboutYourself());
+        System.out.println(vegetable.talkAboutYourself());
+        System.out.println(fruitWithName.talkAboutYourself());
+        System.out.println(vegetableWithName.talkAboutYourself());
+        
+        Fruit fruitWithNameListAndMap = (Fruit) context.getBean("fruitWithNameListAndMap");
+        
+        System.out.println(fruitWithNameListAndMap.talkAboutYourself());
     }
 }
