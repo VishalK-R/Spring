@@ -1,0 +1,27 @@
+Configuring Spring beans for Depedency injection using setter
+	<bean id="fruit" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable" class="com.skills.meal.Vegetable"/>
+    <bean id="meat" class="com.skills.meal.Meat"/>
+    <bean id="mealUsingSetterInjection" class="com.skills.meal.Meal">
+    	<property name="fruit" ref="fruit"/>
+    	<property name="vegetable" ref="vegetable"/>
+    	<property name="meat" ref="meat"/>
+    </bean>
+Configuring Spring beans for Depedency injection using constructor using indexes here the order of argument should be same as the constructor of class
+	<bean id="fruit" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable" class="com.skills.meal.Vegetable"/>
+    <bean id="meat" class="com.skills.meal.Meat"/>
+    <bean id="mealUsingConstructorInjection1" class="com.skills.meal.Meal">
+    	<constructor-arg index="0" ref="fruit"/>
+    	<constructor-arg index="1" ref="vegetable"/>
+    	<constructor-arg index="2" ref="meat"/>
+    </bean>
+Configuring Spring beans for Depedency injection using constructor using name here the name of argument should be same as the constructor of class. here the order is not important
+	<bean id="fruit" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable" class="com.skills.meal.Vegetable"/>
+    <bean id="meat" class="com.skills.meal.Meat"/>
+    <bean id="mealUsingConstructorInjection2" class="com.skills.meal.Meal">
+    	<constructor-arg name="vegetable" ref="vegetable"/>
+    	<constructor-arg name="fruit" ref="fruit"/>
+    	<constructor-arg name="meat" ref="meat"/>
+    </bean>

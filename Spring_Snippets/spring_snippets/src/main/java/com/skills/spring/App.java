@@ -1,37 +1,25 @@
 package com.skills.spring;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.skills.meal.Meal;
+
 /**
  * Hello world!
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-    	// Load the Spring configuration file
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+public class App {
+	public static void main(String[] args) {
+		// Load the Spring configuration file
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        // Get the "helloWorldBean" from the Spring container
-        HelloWorld helloWorld = (HelloWorld) context.getBean("helloWorldBean");
-
-        // Call a method on the bean
-        helloWorld.getMessage();
-        
-        // Get the "fruitBean" and "vegetableBean" from the Spring container
-        Fruit fruit = (Fruit) context.getBean("fruitBean");
-        Vegetable vegetable = (Vegetable) context.getBean("vegetableBean");
-        
-        Fruit fruitWithName = (Fruit) context.getBean("fruitWithName");
-        Vegetable vegetableWithName = (Vegetable) context.getBean("vegetableWithName");
-        
-        System.out.println(fruit.talkAboutYourself());
-        System.out.println(vegetable.talkAboutYourself());
-        System.out.println(fruitWithName.talkAboutYourself());
-        System.out.println(vegetableWithName.talkAboutYourself());
-        
-        Fruit fruitWithNameListAndMap = (Fruit) context.getBean("fruitWithNameListAndMap");
-        
-        System.out.println(fruitWithNameListAndMap.talkAboutYourself());
-    }
+		Meal mealUsingSetterInjection = (Meal) context.getBean("mealUsingSetterInjection");
+		Meal mealUsingConstructorInjection1 = (Meal) context.getBean("mealUsingConstructorInjection1");
+		Meal mealUsingConstructorInjection2 = (Meal) context.getBean("mealUsingConstructorInjection2");
+		
+		System.out.println(mealUsingSetterInjection.talkAboutYourSelf());
+		System.out.println(mealUsingConstructorInjection1.talkAboutYourSelf());
+		System.out.println(mealUsingConstructorInjection2.talkAboutYourSelf());
+	}
 }
