@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans 
+         https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context 
+         https://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:property-placeholder location="classpath:MyApp.properties"/>
     <bean id="helloWorldBean" class="com.skills.spring.HelloWorld">
         <property name="message" value="Hello Spring without Boot!" />
     </bean>
@@ -58,5 +64,25 @@
     	<constructor-arg name="vegetable" ref="vegetable"/>
     	<constructor-arg name="fruit" ref="fruit"/>
     	<constructor-arg name="meat" ref="meat"/>
-    </bean>   
+    </bean>
+    <bean id="vegetableUsingPNameSpace" class="com.skills.spring.Vegetable" p:name="Radish" /> 
+    
+    <bean id="fruitWithNameBean" class="com.skills.meal.Fruit">
+    	<property name="def" value="${fruit-def}"></property>
+    </bean>
+    <bean id="vegetableWithNameBean" class="com.skills.meal.Vegetable" p:def = "${vegetable-def}"/>
+    
+    <bean id="mealOuterBean" class="com.skills.meal.Meal">
+    	<property name="fruit">
+    		<bean name="fruitInnerBean" class="com.skills.meal.Fruit" p:def="${fruit-def}"/>
+    	</property>
+    	<property name="vegetable">
+    		<bean name="vegetableInnerBean" class="com.skills.meal.Vegetable" p:def = "${vegetable-def}"/>
+    	</property>
+    	<property name="meat">
+    		<bean name="meatInnerBean" class="com.skills.meal.Meat"></bean>
+    	</property>
+    </bean>
+    
+    <bean name="fruitWithInitAndDestroy" class="com.skills.meal.Fruit" p:def="${fruit-def}" init-method="init" destroy-method="destroy"/>
 </beans>
