@@ -3,7 +3,6 @@ package com.skills.spring;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.skills.meal.Meal;
 
 /**
  * Hello world!
@@ -14,12 +13,18 @@ public class App {
 		// Load the Spring configuration file
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-		Meal mealUsingSetterInjection = (Meal) context.getBean("mealUsingSetterInjection");
-		Meal mealUsingConstructorInjection1 = (Meal) context.getBean("mealUsingConstructorInjection1");
-		Meal mealUsingConstructorInjection2 = (Meal) context.getBean("mealUsingConstructorInjection2");
+		Vegetable vegetableUsingPNameSpace = (Vegetable) context.getBean("vegetableUsingPNameSpace");
+		com.skills.meal.Fruit fruitWithNameBean = (com.skills.meal.Fruit) context.getBean("fruitWithNameBean");
+		com.skills.meal.Vegetable vegetableWithNameBean = (com.skills.meal.Vegetable) context.getBean("vegetableWithNameBean");
+		com.skills.meal.Meal mealOuterBean = (com.skills.meal.Meal) context.getBean("mealOuterBean");
+		com.skills.meal.Fruit fruitWithInitAndDestroy = (com.skills.meal.Fruit) context.getBean("fruitWithInitAndDestroy");
 		
-		System.out.println(mealUsingSetterInjection.talkAboutYourSelf());
-		System.out.println(mealUsingConstructorInjection1.talkAboutYourSelf());
-		System.out.println(mealUsingConstructorInjection2.talkAboutYourSelf());
+		System.out.println(vegetableUsingPNameSpace.talkAboutYourself());
+		System.out.println(fruitWithNameBean.talkAboutYourself());
+		System.out.println(vegetableWithNameBean.talkAboutYourself());
+		System.out.println(mealOuterBean.talkAboutYourSelf());
+		System.out.println(fruitWithInitAndDestroy.talkAboutYourself());
+		
+		((ClassPathXmlApplicationContext)context).close();
 	}
 }

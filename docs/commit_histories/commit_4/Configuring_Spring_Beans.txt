@@ -1,0 +1,32 @@
+Configure Spring Beans Using p-name space
+
+add xmlns:p="http://www.springframework.org/schema/p" applicationContext.xml to us p name space
+<bean id="vegetableUsingPNameSpace" class="com.skills.spring.Vegetable" p:name="Radish" /> 
+
+
+Configure Spring Beans reading values from property
+Add MyApp.properties in src/main/resources with the properties that needs to be accessed
+add 
+	<context:property-placeholder location="classpath:MyApp.properties"/>
+	<bean id="fruitWithNameBean" class="com.skills.meal.Fruit">
+    	<property name="def" value="${fruit-def}"></property>
+    </bean>
+    <bean id="vegetableWithNameBean" class="com.skills.meal.Vegetable" p:def = "${vegetable-def}"/>
+
+
+Configure InnerBeans for a OuterBeans
+	<bean id="mealOuterBean" class="com.skills.meal.Meal">
+    	<property name="fruit">
+    		<bean name="fruitInnerBean" class="com.skills.meal.Fruit" p:def="${fruit-def}"/>
+    	</property>
+    	<property name="vegetable">
+    		<bean name="vegetableInnerBean" class="com.skills.meal.Vegetable" p:def = "${vegetable-def}"/>
+    	</property>
+    	<property name="meat">
+    		<bean name="meatInnerBean" class="com.skills.meal.Meat"></bean>
+    	</property>
+    </bean>
+
+
+Configure Init and Destroy Methods
+	<bean name="fruitWithInitAndDestroy" class="com.skills.meal.Fruit" p:def="${fruit-def}" init-method="init" destroy-method="destroy"/> scope should be singleton if its prototype spring leaves the object for user to destroy
