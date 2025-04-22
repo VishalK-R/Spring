@@ -1,0 +1,105 @@
+Autowiring is giving depedencies to the class without hardcoding the depedencies
+	there are 5 types of autowiring
+	1. byType
+	2. byName
+	3. constructor
+	4. no
+	5. default
+	
+1. byType: in this type of autowiring there should be only one type of the bean thats need to be autowired else there will be ambiguity and will get below error.
+
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mealbeanAutowiredByType' defined in class path resource [applicationContext.xml]: Unsatisfied dependency expressed through bean property 'meat'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'com.skills.meal.Meat' available: expected single matching bean but found 2: meat1,meat2
+Exception in thread "main" org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mealbeanAutowiredByType' defined in class path resource [applicationContext.xml]: Unsatisfied dependency expressed through bean property 'meat'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'com.skills.meal.Meat' available: expected single matching bean but found 2: meat1,meat2
+
+So to resolve the above error if there are multiple beans of same type then the bean which we need we can mark as primary="true" or we can set the autowire-candidate="false" for the beans whic we dont need to be autowired
+
+	<bean id="fruit1" class="com.skills.meal.Fruit"/>
+    <bean id="fruit2" class="com.skills.meal.Fruit" autowire-candidate="false"/>
+    <bean id="vegetable1" class="com.skills.meal.Vegetable"/>
+    <bean id="meat1" class="com.skills.meal.Meat" primary="true"/>
+    <bean id="meat2" class="com.skills.meal.Meat"/>
+    <bean id="mealbeanAutowiredByType" class="com.skills.meal.Meal" autowire="byType"/>
+	
+Above is example of autowire byType
+
+2. byName : In this type of autowire the depedencies resolution will be done based on the names, so the name of the bean should match the properties (depedencies) name in the class
+	<bean id="fruit" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable" class="com.skills.meal.Vegetable"/>
+    <bean id="meat" class="com.skills.meal.Meat"/>
+    <bean id="mealbeanAutowiredByName" class="com.skills.meal.Meal" autowire="byName"/>
+	
+public class Meal {
+	Fruit fruit;
+	Vegetable vegetable;
+	Meat meat;
+	public Meat getMeat() {
+		return meat;
+	}
+	public void setMeat(Meat meat) {
+		this.meat = meat;
+	}
+	public Fruit getFruit() {
+		return fruit;
+	}
+	public void setFruit(Fruit fruit) {
+		this.fruit = fruit;
+	}
+	public Vegetable getVegetable() {
+		return vegetable;
+	}
+	public void setVegetable(Vegetable vegetable) {
+		this.vegetable = vegetable;
+	}
+	public String talkAboutYourSelf() {
+		String speech = "Meal contains:";
+		if(fruit!=null)speech+=" Fruit";
+		if(vegetable!=null)speech+=" Vegetable";
+		if(meat!=null)speech+=" Meat";
+		return speech;
+	}
+	public Meal() {
+		
+	}
+	public Meal(Fruit fruit, Vegetable vegetable, Meat meat) {
+		this.fruit = fruit;
+		this.vegetable = vegetable;
+		this.meat = meat;
+	}
+}
+
+3. constructor: in this type of autowiring it works similar to autowire byType, but the difference is if ambiguity is there it doesn't set depdencies but will instantiate the class without depdencies.
+	<bean id="fruit1" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable1" class="com.skills.meal.Vegetable"/>
+    <bean id="meat1" class="com.skills.meal.Meat"/>
+    <bean id="meat2" class="com.skills.meal.Meat" primary="true"/>
+    <bean id="mealbeanAutowiredByConstructor" class="com.skills.meal.Meal" autowire="constructor"/>
+	
+
+4. no: this means this class can't be autowired. In this case the depdencies must be provided manually
+	<bean id="mealbeanAutowiredByNo" class="com.skills.meal.Meal" autowire="no"/> --> in this case depdency is not set
+	
+	in the below case we are providing the depdencies manually using inner beans and property setting
+	<bean id="fruit" class="com.skills.meal.Fruit"/>
+	<bean id="mealbeanAutowiredByNo" class="com.skills.meal.Meal" autowire="no">
+    	<property name="fruit" ref="fruit"/>
+    	<property name="vegetable">
+    		<bean name="vegetableInnerBean" class="com.skills.meal.Vegetable" p:def = "${vegetable-def}"/>
+    	</property>
+    	<property name="meat">
+    		<bean name="meatInnerBean" class="com.skills.meal.Meat"></bean>
+    	</property>
+    </bean>
+	
+5. default: the default behaviour is no , to change this we need to add --> default-autowire="byType" or default-autowire="byName" inside the beans tag.
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byType">
+	   
+	   <bean id="mealbeanAutowiredByDefault" class="com.skills.meal.Meal"/>
+	   <bean id="mealbeanAutowiredByDefault" class="com.skills.meal.Meal" autowire="default"/>
+	   
+	   both works as autowire is default by behaviour, default-autowire in beans is "no"
