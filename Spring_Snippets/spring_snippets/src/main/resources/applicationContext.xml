@@ -3,14 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="
-         http://www.springframework.org/schema/beans 
-         https://www.springframework.org/schema/beans/spring-beans.xsd
-         http://www.springframework.org/schema/context 
-         https://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byType">
 
 	<context:property-placeholder location="classpath:MyApp.properties"/>
-    <bean id="helloWorldBean" class="com.skills.spring.HelloWorld">
+   <!--   <bean id="helloWorldBean" class="com.skills.spring.HelloWorld">
         <property name="message" value="Hello Spring without Boot!" />
     </bean>
     
@@ -84,5 +81,32 @@
     	</property>
     </bean>
     
-    <bean name="fruitWithInitAndDestroy" class="com.skills.meal.Fruit" p:def="${fruit-def}" init-method="init" destroy-method="destroy"/>
+    <bean name="fruitWithInitAndDestroy" class="com.skills.meal.Fruit" p:def="${fruit-def}" init-method="init" destroy-method="destroy"/>-->
+    
+    <!-- Autowire ByType 
+    <bean id="fruit1" class="com.skills.meal.Fruit"/>
+    <bean id="fruit2" class="com.skills.meal.Fruit" autowire-candidate="false"/>
+    <bean id="vegetable1" class="com.skills.meal.Vegetable"/>
+    <bean id="meat1" class="com.skills.meal.Meat" primary="true"/>
+    <bean id="meat2" class="com.skills.meal.Meat"/>
+    <bean id="mealbeanAutowiredByType" class="com.skills.meal.Meal" autowire="byType"/>-->
+    
+    <!-- Autowire ByName 
+    <bean id="fruit" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable" class="com.skills.meal.Vegetable"/>
+    <bean id="meat" class="com.skills.meal.Meat"/>
+    <bean id="mealbeanAutowiredByName" class="com.skills.meal.Meal" autowire="byName"/>-->
+    
+    <!-- Autowire By Constructor
+    <bean id="fruit1" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable1" class="com.skills.meal.Vegetable"/>
+    <bean id="meat1" class="com.skills.meal.Meat"/>
+    <bean id="meat2" class="com.skills.meal.Meat" primary="true"/>
+    <bean id="mealbeanAutowiredByConstructor" class="com.skills.meal.Meal" autowire="constructor"/>-->
+    
+    <!-- Autowire By Default 
+    <bean id="fruit" class="com.skills.meal.Fruit"/>
+    <bean id="vegetable" class="com.skills.meal.Vegetable"/>
+    <bean id="meat" class="com.skills.meal.Meat"/>
+    <bean id="mealbeanAutowiredByDefault" class="com.skills.meal.Meal"/>-->
 </beans>
